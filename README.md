@@ -1,3 +1,6 @@
+**DCT** - Modified to remove unwanted Ubuntu and CentOS lustre 1.6 clients, and begin work on pacemaker failover functionality.
+
+
 -----------
 Description
 -----------
@@ -41,7 +44,7 @@ http://www.dell.com/downloads/global/solutions/200-DELL-CAMBRIDGE-SOLUTIONS-WHIT
                                                -----------------------------
 
 Server supported only on CentOS 6.
-Clients supported on Ubuntu 12.04, CentOS 6/7.
+Clients supported on CentOS 6/7.
 
 For introduction to lustre see https://www.citutor.org/login.php?course=61
 "Using the Lustre File System - Cyberinfrastructure Tutor"
@@ -105,10 +108,9 @@ Other benchmarks from http://www.opensfs.org/wp-content/uploads/2013/04/LIND_LUG
 
 Test other clients::
 
-        $ vagrant up centos6 centos6_lustre18 ubuntu12
+        $ vagrant up centos6
         $ vagrant ssh centos6 -c "sudo su -c 'lfs df -h'"
-        $ vagrant ssh centos6_lustre18 -c "sudo su -c 'lfs df -h'"
-        $ # vagrant ssh ubuntu12 -c "sudo su -c 'lfs df -h'"  # hangs
+
 
 Test vagrant user access to the filesystem::
 
