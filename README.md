@@ -1,5 +1,9 @@
 **DCT** - Modified to remove unwanted Ubuntu and CentOS lustre 1.6 clients, and begin work on pacemaker failover functionality.
 
+ * 512MB per VM - 3GB required for entire environment.
+ * using virtio paravirtualized network for better performance.
+ * 1GB MGT/MDT and 2 * 8GB OSTs
+
 
 -----------
 Description

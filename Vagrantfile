@@ -19,20 +19,21 @@ Vagrant.configure(2) do |config|
     mds01.vm.box_url = 'puppetlabs/centos-6.6-64-nocm'
     # installing lustre kernel removes virtualbox guest additions
     mds01.vm.synced_folder ".", "/vagrant", disabled: true
-    mds01.vm.network "private_network", ip: "10.0.4.6"
+    mds01.vm.network "private_network", ip: "10.0.4.6", nic_type: "virtio"
     mds01.vm.provider "virtualbox" do |v|
-      v.memory = 256  # lustre is greedy and segfaults with small RAM
+      v.memory = 512  # lustre is greedy and segfaults with small RAM
       # https://jira.hpdd.intel.com/browse/LU-5697
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
     mds01.vm.provider "virtualbox" do |vb|
       if !File.exist?("mgt01.vdi")
-        vb.customize ["createhd", "--filename", "mgt01.vdi", "--size", 64, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "mgt01.vdi", "--size", 1024, "--variant", "Fixed"]
         vb.customize ["modifyhd", "mgt01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 0, "--device", 1, "--type", "hdd", "--medium", "mgt01.vdi"]
       if !File.exist?("mdt01.vdi")
-        vb.customize ["createhd", "--filename", "mdt01.vdi", "--size", 128, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "mdt01.vdi", "--size", 1024, "--variant", "Fixed"]
         vb.customize ["modifyhd", "mdt01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "mdt01.vdi"]
@@ -44,20 +45,21 @@ Vagrant.configure(2) do |config|
     mds02.vm.box_url = 'puppetlabs/centos-6.6-64-nocm'
     # installing lustre kernel removes virtualbox guest additions
     mds02.vm.synced_folder ".", "/vagrant", disabled: true
-    mds02.vm.network "private_network", ip: "10.0.4.7"
+    mds02.vm.network "private_network", ip: "10.0.4.7", nic_type: "virtio"
     mds02.vm.provider "virtualbox" do |v|
-      v.memory = 256  # lustre is greedy and segfaults with small RAM
+      v.memory = 512  # lustre is greedy and segfaults with small RAM
       # https://jira.hpdd.intel.com/browse/LU-5679
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
     mds02.vm.provider "virtualbox" do |vb|
       if !File.exist?("mgt01.vdi")
-        vb.customize ["createhd", "--filename", "mgt01.vdi", "--size", 64, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "mgt01.vdi", "--size", 1024, "--variant", "Fixed"]
         vb.customize ["modifyhd", "mgt01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 0, "--device", 1, "--type", "hdd", "--medium", "mgt01.vdi"]
       if !File.exist?("mdt01.vdi")
-        vb.customize ["createhd", "--filename", "mdt01.vdi", "--size", 128, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "mdt01.vdi", "--size", 1024, "--variant", "Fixed"]
         vb.customize ["modifyhd", "mdt01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "mdt01.vdi"]
@@ -69,20 +71,21 @@ Vagrant.configure(2) do |config|
     oss01.vm.box_url = 'puppetlabs/centos-6.6-64-nocm'
     # installing lustre kernel removes virtualbox guest additions
     oss01.vm.synced_folder ".", "/vagrant", disabled: true
-    oss01.vm.network "private_network", ip: "10.0.4.8"
+    oss01.vm.network "private_network", ip: "10.0.4.8", nic_type: "virtio"
     oss01.vm.provider "virtualbox" do |v|
-      v.memory = 256  # lustre is greedy and segfaults with small RAM
+      v.memory = 512  # lustre is greedy and segfaults with small RAM
       # https://jira.hpdd.intel.com/browse/LU-5697
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
     oss01.vm.provider "virtualbox" do |vb|
       if !File.exist?("ost01.vdi")
-        vb.customize ["createhd", "--filename", "ost01.vdi", "--size", 768, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "ost01.vdi", "--size", 8192, "--variant", "Fixed"]
         vb.customize ["modifyhd", "ost01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "ost01.vdi"]
       if !File.exist?("ost02.vdi")
-        vb.customize ["createhd", "--filename", "ost02.vdi", "--size", 768, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "ost02.vdi", "--size", 8192, "--variant", "Fixed"]
         vb.customize ["modifyhd", "ost02.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 1, "--type", "hdd", "--medium", "ost02.vdi"]
@@ -94,20 +97,21 @@ Vagrant.configure(2) do |config|
     oss02.vm.box_url = 'puppetlabs/centos-6.6-64-nocm'
     # installing lustre kernel removes virtualbox guest additions
     oss02.vm.synced_folder ".", "/vagrant", disabled: true
-    oss02.vm.network "private_network", ip: "10.0.4.9"
+    oss02.vm.network "private_network", ip: "10.0.4.9", nic_type: "virtio"
     oss02.vm.provider "virtualbox" do |v|
-      v.memory = 256  # lustre is greedy and segfaults with small RAM
+      v.memory = 512  # lustre is greedy and segfaults with small RAM
       # https://jira.hpdd.intel.com/browse/LU-5697
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
     oss02.vm.provider "virtualbox" do |vb|
       if !File.exist?("ost01.vdi")
-        vb.customize ["createhd", "--filename", "ost01.vdi", "--size", 768, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "ost01.vdi", "--size", 8192, "--variant", "Fixed"]
         vb.customize ["modifyhd", "ost01.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 0, "--type", "hdd", "--medium", "ost01.vdi"]
       if !File.exist?("ost02.vdi")
-        vb.customize ["createhd", "--filename", "ost02.vdi", "--size", 768, "--variant", "Fixed"]
+        vb.customize ["createhd", "--filename", "ost02.vdi", "--size", 8192, "--variant", "Fixed"]
         vb.customize ["modifyhd", "ost02.vdi", "--type", "shareable"]
       end
       vb.customize ["storageattach", :id, "--storagectl", "IDE Controller", "--port", 1, "--device", 1, "--type", "hdd", "--medium", "ost02.vdi"]
@@ -118,10 +122,11 @@ Vagrant.configure(2) do |config|
     centos6.vm.box = "puppetlabs/centos-6.6-64-nocm"
     centos6.vm.box_url = 'puppetlabs/centos-6.6-64-nocm'
     centos6.vm.box_version = '1.0.1'  # must match kernel used to build lustre
-    centos6.vm.network "private_network", ip: "10.0.4.20"
+    centos6.vm.network "private_network", ip: "10.0.4.20", nic_type: "virtio"
     centos6.vm.provider "virtualbox" do |v|
-      v.memory = 256  # mount.lustre: mount mds01@tcp0:mds02@tcp0:/testfs at /lustre failed: Cannot allocate memory
+      v.memory = 512 # mount.lustre: mount mds01@tcp0:mds02@tcp0:/testfs at /lustre failed: Cannot allocate memory
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
   end
   # centos7 client
@@ -129,10 +134,11 @@ Vagrant.configure(2) do |config|
     centos7.vm.box = "puppetlabs/centos-7.0-64-nocm"
     centos7.vm.box_url = 'puppetlabs/centos-7.0-64-nocm'
     centos7.vm.box_version = '1.0.1'  # must match kernel used to build lustre
-    centos7.vm.network "private_network", ip: "10.0.4.30"
+    centos7.vm.network "private_network", ip: "10.0.4.30", nic_type: "virtio"
     centos7.vm.provider "virtualbox" do |v|
-      v.memory = 128
+      v.memory = 512
       v.cpus = 1
+      v.customize ['modifyvm', :id, '--nictype1', 'virtio']
     end
   end
   # disable IPv6 on Linux
